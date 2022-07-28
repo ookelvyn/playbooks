@@ -1,0 +1,17 @@
+---
+- hosts: web
+  tasks:
+  - name: Create .ssh folder
+    file:
+     path: "/home/ansadmin/.ssh"
+     state: "directory"
+     mode: "0700"
+  - name: Create authorized_key files
+    file:
+     path: "/home/ansadmin/.ssh/authorized_keys"
+     state: "touch"
+     mode: "0600"
+  - name: Copy public_key
+    lineinfile:
+     path: "/home/ansadmin/.ssh/authorized_keys"
+     line: "ssh-rsa pub file created in the node should be pasted here"
