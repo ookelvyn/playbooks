@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+   volume_id: "vol-xxx"
+  tasks:
+  - name: Attach existing EBS
+    amazon.aws.ec2_vol:
+      instance:
+      id: "{{ volume_id }}"
+      device_name: /dev/sdf
+  - name: Mount the volume
+  - name: Install httpd
+    yum:
+     name: httpd
+     state: present
+  - name: Start the service
+    service:
+     name: httpd
+     state: "started"

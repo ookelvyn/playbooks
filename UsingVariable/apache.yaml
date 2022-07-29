@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+   package_name: httpd
+   service_name: httpd
+  tasks:
+    - name: Install httpd
+      become: true
+      yum:
+       name: "{{ package_name }}"
+       state: present
+    - name: Copy index.html
+      become: true
+      copy:
+       src: "/tmp/index.html"
+       dest: "/var/www/html/index.html"
+    - name: Start httpd service
+      become: true
+      service:
+       name: "{{ service_name }}"
+       state: "started"
