@@ -4,12 +4,24 @@
   vars:
    volume_id: "vol-xxx"
   tasks:
+  - name: Collect instance ID
+    uri:
+      url: http://169.254.169.254/latest/meta-data/instance-id
+      return_content: yes
+    register: instance_id
   - name: Attach existing EBS
-    amazon.aws.ec2_vol:
-      instance:
+    ec2_vol:
+      instance: "{{ instance_id.content }}"
       id: "{{ volume_id }}"
-      device_name: /dev/sdf
+      device_name: /dev/xvdf
+      region: "us-east-1"
   - name: Mount the volume
+    mount:
+      path: /var/www/html
+      src: /dev/xvdf
+      fstype: ext4
+      opts: default
+      state: mounted
   - name: Install httpd
     yum:
      name: httpd

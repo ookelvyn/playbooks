@@ -30,6 +30,9 @@ Tasks:
 
     Requirements: install python, boto3 and botocore
 
+    After writing the playbook, create s3bucket and upload the playbook file
+    keep the path in the bin bash (userdata.sh) "aws s3 cp s3://playbookPath /tmp/ebs,yaml
+    copy userdata.sh data and paste in lunch configuration as text
 
 
 Mount it on /var/www/html
